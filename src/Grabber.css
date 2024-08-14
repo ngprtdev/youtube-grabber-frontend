@@ -1,0 +1,78 @@
+.thumbnailsToList {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  gap: 30px;
+  justify-content: center;
+  align-items: center;
+}
+
+.thumbnailsToList img {
+  object-fit: contain;
+}
+
+.thumbnail-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.grabberContent {
+  width: 100%;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 24px;
+  color: #140133;
+}
+
+.grabberContent h1 {
+  font-size: 48px;
+  font-weight: bold;
+  background: linear-gradient(90deg, #140133, #3390ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  color: transparent;
+}
+
+.grabberContent p {
+  font-size: 16px;
+}
+
+.tokeeLogo {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+.tokeeLogo img {
+  width: 100px;
+}
+
+.tokeeLogo p {
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+}
+
+.imagesContent {
+  display: flex;
+  flex-direction: column;
+  width: 50vw;
+  padding: 10%;
+  gap: 10px;
+  background-color: lightblue;
+}
+
+.imagesContent input {
+  width: 80%;
+}
+
+.youtubeUrlSection {
+  display: flex;
+  flex-direction: row;
+}
