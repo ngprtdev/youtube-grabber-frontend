@@ -2,25 +2,44 @@
   display: flex;
   flex-wrap: wrap;
   flex-direction: column;
-  gap: 30px;
+  gap: 4rem;
   justify-content: center;
   align-items: center;
-}
-
-.thumbnailsToList img {
-  object-fit: contain;
+  margin-top: 32px;
+  border-radius: 5px;
 }
 
 .thumbnail-container {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
+  width: 100%;
+  padding-top: 16px;
+  padding-bottom: 16px;
+  border-radius: 5px;
+  background-color: rgba(211, 211, 211, 0.199);
+}
+
+.thumbnail-container img {
+  width: 100%;
+}
+
+.thumbnail-container p {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.thumbnail-container p:nth-child(1) {
+  font-weight: bold;
+}
+
+.thumbnail-container p:nth-child(2) {
+  color: gray;
+  margin-bottom: 10px;
 }
 
 .grabberContent {
-  width: 100%;
-
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -32,15 +51,12 @@
 .grabberContent h1 {
   font-size: 48px;
   font-weight: bold;
+  margin-bottom: 0;
   background: linear-gradient(90deg, #140133, #3390ff);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
   color: transparent;
-}
-
-.grabberContent p {
-  font-size: 16px;
 }
 
 .tokeeLogo {
@@ -50,7 +66,7 @@
 }
 
 .tokeeLogo img {
-  width: 100px;
+  max-width: 200px;
 }
 
 .tokeeLogo p {
@@ -63,16 +79,57 @@
   display: flex;
   flex-direction: column;
   width: 50vw;
-  padding: 10%;
-  gap: 10px;
-  background-color: lightblue;
-}
-
-.imagesContent input {
-  width: 80%;
+  padding: 4%;
+  gap: 8px;
+  border-radius: 5px;
+  box-shadow: 0px 4px 15px rgba(73, 170, 235, 0.842);
 }
 
 .youtubeUrlSection {
+  position: relative;
   display: flex;
-  flex-direction: row;
+  justify-content: center;
+}
+
+.youtubeUrlSection input {
+  width: 80%;
+  padding: 0.5rem;
+}
+
+.youtubeUrlSection button {
+  position: absolute;
+  right: 12%;
+  bottom: 10px;
+  height: 1.5rem;
+  cursor: pointer;
+}
+
+.buttonLayout {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.buttonLayout button {
+  padding: 8px 16px;
+  border-radius: 16px;
+  border: 1px solid gray;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.isNotClicked {
+  background-color: white;
+  color: gray;
+}
+
+.isClicked {
+  background-color: gray;
+  color: white;
+}
+
+.buttonLayout button:nth-child(2) {
+  background-color: blue;
+  color: white;
 }

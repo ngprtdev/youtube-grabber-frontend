@@ -1,10 +1,15 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { CiSearch } from "react-icons/ci";
+import { RiDownload2Fill } from "react-icons/ri";
+import { PiCopy } from "react-icons/pi";
 import style from "./Grabber.css";
+import GrabberExplanation from "./GrabberExplanation";
 
 const Grabber = () => {
   const [videoUrl, setVideoUrl] = useState("");
   const [thumbnails, setThumbnails] = useState([]);
+  const [clickedIndex, setClickedIndex] = useState(null);
   const [error, setError] = useState(null);
 
   const handleSubmit = async (event) => {
@@ -26,7 +31,27 @@ const Grabber = () => {
     }
   };
 
-  console.log(thumbnails);
+  const copyToClipboard = async (textToCopy, index) => {
+    setClickedIndex(index);
+    try {
+      await navigator.clipboard.writeText(textToCopy);
+    } catch (err) {
+      console.error("Failed to copy text", err);
+    }
+    setTimeout(() => {
+      setClickedIndex(null);
+    }, "100");
+  };
+
+  const handleDownload = (imageUrl) => {
+    const link = document.createElement("a");
+    link.href = imageUrl;
+    link.download = "";
+    document.body.appendChild(link);
+    link.click();
+
+    document.body.removeChild(link);
+  };
 
   return (
     <div className="grabberContent">
@@ -51,12 +76,15 @@ const Grabber = () => {
               onChange={(e) => setVideoUrl(e.target.value)}
               placeholder="Paste your YouTube video url here"
             />
-            <button type="submit">Download</button>
+            <button type="submit">
+              <CiSearch />
+            </button>
           </div>
           {error && <p className="error-message">{error}</p>}
-          <div className="thumbnailsToList">
-            {thumbnails.length > 0 &&
-              thumbnails.map((thumbnail, index) => (
+          {thumbnails.length === 0 && <GrabberExplanation />}
+          {thumbnails.length > 0 && (
+            <div className="thumbnailsToList">
+              {thumbnails.map((thumbnail, index) => (
                 <div key={index} className="thumbnail-container">
                   {thumbnail.error ? (
                     <p className="image-error">{thumbnail.error}</p>
@@ -81,11 +109,32 @@ const Grabber = () => {
                           }}
                         />
                       </a>
+                      <div className="buttonLayout">
+                        <button
+                          type="button"
+                          onClick={() => copyToClipboard(thumbnail.url, index)}
+                          className={
+                            clickedIndex === index
+                              ? "isClicked"
+                              : "isNotClicked"
+                          }
+                        >
+                          <PiCopy />
+                          Copy URL
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => handleDownload(thumbnail.url)}
+                        >
+                          <RiDownload2Fill /> Download
+                        </button>
+                      </div>
                     </>
                   )}
                 </div>
               ))}
-          </div>
+            </div>
+          )}
         </div>
       </form>
     </div>
