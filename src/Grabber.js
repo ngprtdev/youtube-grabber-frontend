@@ -43,14 +43,29 @@ const Grabber = () => {
     }, "100");
   };
 
-  const handleDownload = (imageUrl) => {
-    const link = document.createElement("a");
-    link.href = imageUrl;
-    link.download = "";
-    document.body.appendChild(link);
-    link.click();
+  const handleDownload = async (imageUrl) => {
+    try {
+      const response = await axios.post(
+        "http://localhost:3001/youtube-thumbnail/download",
+        { url: imageUrl },
+        { responseType: "blob" }
+      );
 
-    document.body.removeChild(link);
+      const blob = new Blob([response.data], {
+        type: response.headers["content-type"],
+      });
+
+      const link = document.createElement("a");
+      link.href = URL.createObjectURL(blob);
+      link.download = "thumbnail.jpg";
+      document.body.appendChild(link);
+      link.click();
+
+      document.body.removeChild(link);
+      URL.revokeObjectURL(link.href);
+    } catch (error) {
+      console.error("Failed to download the image:", error);
+    }
   };
 
   return (
