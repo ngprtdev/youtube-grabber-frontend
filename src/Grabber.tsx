@@ -3,26 +3,34 @@ import axios from "axios";
 import { CiSearch } from "react-icons/ci";
 import { RiDownload2Fill } from "react-icons/ri";
 import { PiCopy } from "react-icons/pi";
-import style from "./Grabber.css";
+import "./Grabber.css";
 import GrabberExplanation from "./GrabberExplanation";
 
-const Grabber = () => {
-  const [videoUrl, setVideoUrl] = useState("");
-  const [thumbnails, setThumbnails] = useState([]);
-  const [clickedIndex, setClickedIndex] = useState(null);
-  const [error, setError] = useState(null);
+interface Thumbnail {
+  url: string;
+  size: string;
+  text: string;
+  error?: string;
+}
 
-  const handleSubmit = async (event) => {
+const Grabber: React.FC = () => {
+  const [videoUrl, setVideoUrl] = useState<string>("");
+  const [thumbnails, setThumbnails] = useState<Thumbnail[]>([]);
+  const [clickedIndex, setClickedIndex] = useState<number | null>(null);
+  const [error, setError] = useState<string | null>(null);
+
+  // Typage de l'événement du formulaire et de la réponse API
+  const handleSubmit = async (event: React.FormEvent) => {
     setThumbnails([]);
     event.preventDefault();
     try {
-      const response = await axios.post(
+      const response = await axios.post<{ thumbnails: Thumbnail[] }>(
         "http://localhost:3001/youtube-thumbnail",
         { url: videoUrl }
       );
       setThumbnails(response.data.thumbnails);
       setError(null);
-    } catch (error) {
+    } catch (error: any) {
       console.error("There was an error fetching the thumbnails!", error);
       setError(
         error.response?.data?.message ||
@@ -31,7 +39,7 @@ const Grabber = () => {
     }
   };
 
-  const copyToClipboard = async (textToCopy, index) => {
+  const copyToClipboard = async (textToCopy: string, index: number) => {
     setClickedIndex(index);
     try {
       await navigator.clipboard.writeText(textToCopy);
@@ -40,10 +48,10 @@ const Grabber = () => {
     }
     setTimeout(() => {
       setClickedIndex(null);
-    }, "100");
+    }, 100);
   };
 
-  const handleDownload = async (imageUrl) => {
+  const handleDownload = async (imageUrl: string) => {
     try {
       const response = await axios.post(
         "http://localhost:3001/youtube-thumbnail/download",
@@ -106,7 +114,6 @@ const Grabber = () => {
                   ) : (
                     <>
                       <p>{thumbnail.text}</p>
-
                       <p>{thumbnail.size}</p>
                       <a
                         href={thumbnail.url}
@@ -116,11 +123,13 @@ const Grabber = () => {
                           src={thumbnail.url}
                           alt={`Thumbnail ${index}`}
                           onError={(e) => {
-                            e.target.style.display = "none";
+                            e.currentTarget.style.display = "none";
                             const errorMsg = document.createElement("p");
                             errorMsg.textContent = "Image not found";
                             errorMsg.className = "image-error";
-                            e.target.parentElement.appendChild(errorMsg);
+                            e.currentTarget.parentElement?.appendChild(
+                              errorMsg
+                            );
                           }}
                         />
                       </a>

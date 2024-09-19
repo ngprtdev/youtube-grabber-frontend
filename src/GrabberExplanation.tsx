@@ -1,7 +1,14 @@
 import React from "react";
-import style from "./GrabberExplanation.css";
+import "./GrabberExplanation.css";
 
-const explanationContent = [
+type ExplanationStep = {
+  step: number;
+  text: string;
+  url: string | null;
+};
+
+// Les données avec le type défini
+const explanationContent: ExplanationStep[] = [
   {
     step: 1,
     text: "Click to download below the video",
@@ -18,7 +25,8 @@ const explanationContent = [
     url: null,
   },
 ];
-function GrabberExplanation() {
+
+const GrabberExplanation: React.FC = () => {
   return (
     <div className="ParentLayout">
       <div className="TrySection">
@@ -26,20 +34,18 @@ function GrabberExplanation() {
         <span>https://www.youtube.com/watch?v=0TolBiTrUg4</span>
       </div>
       <div className="CardsLayout">
-        {explanationContent.map((step, index) => {
-          return (
-            <div key={index} className="IndividualLayout">
-              <div className="Steptext">
-                <p>{step.step}</p>
-                <p>{step.text}</p>
-              </div>
-              <img src={step.url}></img>
+        {explanationContent.map((step, index) => (
+          <div key={index} className="IndividualLayout">
+            <div className="Steptext">
+              <p>{step.step}</p>
+              <p>{step.text}</p>
             </div>
-          );
-        })}
+            {step.url && <img src={step.url} alt={`Step ${step.step}`} />}{" "}
+          </div>
+        ))}
       </div>
     </div>
   );
-}
+};
 
 export default GrabberExplanation;
